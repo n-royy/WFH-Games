@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Modal, Button, Image, Form, InputGroup } from 'react-bootstrap';
+import { Modal, Button, Image, Form } from 'react-bootstrap';
 import LandingPicture from '../images/back-ground.jpg';
 import { register, login } from '../action/auth';
 
@@ -18,7 +18,7 @@ const Register = ({ show, onHide, register, isAuthenticated, login, auth }) => {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmit = async (e) => {
+  const onRegister = async (e) => {
     e.preventDefault();
 
     if (account === '' || unit === '') {
@@ -42,8 +42,7 @@ const Register = ({ show, onHide, register, isAuthenticated, login, auth }) => {
       centered
     >
       <Modal.Body>
-        <Image src={LandingPicture} fluid />
-        <h4></h4>
+        <Image src={LandingPicture} fluid style={{ marginBottom: '10px' }} />
         <Form>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Control
@@ -55,18 +54,18 @@ const Register = ({ show, onHide, register, isAuthenticated, login, auth }) => {
                 onChange(e);
               }}
             />
-            {!checked && (
+            {checked && (
               <Form.Text className='text-muted'>
-                {`Using Fsoft's account(ex: NamNN10)`}
+                {`Using Fsoft's account (ex: NamNN10)`}
               </Form.Text>
             )}
           </Form.Group>
 
-          {!checked && (
+          {checked && (
             <Form.Group className='mb-3' controlId='formBasicPassword'>
               <Form.Control
                 type='text'
-                placeholder='Unit'
+                placeholder='BU'
                 name='unit'
                 value={unit}
                 onChange={(e) => {
@@ -78,8 +77,7 @@ const Register = ({ show, onHide, register, isAuthenticated, login, auth }) => {
           <Form.Text className='text-muted'>
             <Form.Check
               type={'checkbox'}
-              id={`Have an Account Already?`}
-              label={`Have an Account Already?`}
+              label={`Haven't an Account Already?`}
               checked={checked}
               onClick={() => setChecked(!checked)}
             />
@@ -89,13 +87,13 @@ const Register = ({ show, onHide, register, isAuthenticated, login, auth }) => {
           className='footer'
           style={{ textAlign: 'center', marginTop: '10px' }}
         >
-          {!checked ? (
+          {checked ? (
             <Button
               disabled={account !== '' && unit !== '' ? false : true}
               variant={
                 account !== '' && unit !== '' ? 'outline-info' : 'secondary'
               }
-              onClick={(e) => onSubmit(e)}
+              onClick={(e) => onRegister(e)}
             >
               {`Register & Play`}
             </Button>

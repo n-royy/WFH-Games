@@ -7,6 +7,7 @@ import { Table, Pagination } from 'react-bootstrap';
 
 const Ranking = ({ auth, getDataReport }) => {
   const [active, setActive] = useState(1);
+  const [indexSum, setIndexSum] = useState(0);
   const [page, setPage] = useState(0);
   useEffect(() => {
     getDataReport();
@@ -27,6 +28,7 @@ const Ranking = ({ auth, getDataReport }) => {
     const currentPage = Number(e.currentTarget.outerText);
     setActive(currentPage);
     setPage(currentPage - 1);
+    setIndexSum((currentPage - 1) * 10);
   };
   const data = auth.data ? auth.data : [];
 
@@ -43,18 +45,22 @@ const Ranking = ({ auth, getDataReport }) => {
           </tr>
         </thead>
         <tbody>
-          {data && data.length !== 0
-            ? data.slice(page * 10, page * 10 + 10).map((item, index) => {
-                return (
-                  <tr>
-                    <td>{index + 1}</td>
-                    <td>{item.username}</td>
-                    <td>{item.unit}</td>
-                    <td>{item.score}</td>
-                  </tr>
-                );
-              })
-            : `No record to show`}
+          {data && data.length !== 0 ? (
+            data.slice(page * 10, page * 10 + 10).map((item, index) => {
+              return (
+                <tr>
+                  <td>{index + indexSum + 1}</td>
+                  <td>{item.username}</td>
+                  <td>{item.unit}</td>
+                  <td>{item.score}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <td colSpan='4' style={{ textAlign: 'center' }}>
+              No record to show
+            </td>
+          )}
         </tbody>
       </Table>
       <div className='footer-pagination'>

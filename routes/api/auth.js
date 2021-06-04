@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const User = require('../../model/User');
+const Profile = require('../../model/Profile');
 
 // @route   Get api/auth
 // @desc    Get user
@@ -33,7 +34,11 @@ router.post(
     }
     const { name } = req.body;
     try {
-      let user = await User.findOne({ name });
+      let user = await Profile.findOne({ username: name });
+      if (user) {
+        return res.status(404).json({ error: [{ msg: 'User have contest' }] });
+      }
+      user = await User.findOne({ name });
       if (!user) {
         return res
           .status(400)

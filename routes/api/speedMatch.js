@@ -25,7 +25,7 @@ router.post('/', auth, async (req, res) => {
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    const profiles = await Profile.find();
+    const profiles = await Profile.find().sort({ score: -1 });
     res.status(200).json({
       status: 'Success',
       count: profiles.length,

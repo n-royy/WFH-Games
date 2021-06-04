@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import logo from '../images/logo.png';
 
 //component
 import { Button } from 'react-bootstrap';
@@ -24,7 +25,9 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <div className='main'>
       <div className='cover black' data-color='black'></div>
-
+      <div>
+        <img src={logo} style={{ width: '200px', padding: '10px' }} alt='' />
+      </div>
       <div className='container'>
         <h1 className='logo cursive'>WFH GAMES</h1>
 
@@ -34,6 +37,7 @@ const Landing = ({ isAuthenticated }) => {
           </h4>
           <div className='subscribe'>
             <h5 className='info-text'>
+              <p style={{ color: '#ff8c43' }}>{'FDN.FIN5 & FSG.BF3'}</p>
               Join us to challenge your colleagues and get great rewards.
             </h5>
           </div>
@@ -44,7 +48,7 @@ const Landing = ({ isAuthenticated }) => {
                 onClick={() => setModalShow(true)}
                 style={{ marginRight: '20px' }}
               >
-                Started
+                Start!
               </Button>
               <Button variant='primary' onClick={() => setToRanking(true)}>
                 Ranking

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { reportResult } from '../action/auth';
 import Countdown from './Countdown';
+import $ from 'jquery';
 import {
   Container,
   Row,
@@ -16,7 +17,6 @@ import {
 import { ArrowRightSquare, ArrowLeftSquare } from 'react-bootstrap-icons';
 
 //image
-import bg from '../images/speed/bg.jpg';
 import congrats from '../images/speed/congrats.jpg';
 import img0 from '../images/speed/img0.jpg';
 import img1 from '../images/speed/img1.jpg';
@@ -29,6 +29,7 @@ const Game = ({ auth, reportResult }) => {
   const [play, setPlay] = useState(false);
   const [pause, setPause] = useState(false);
   const [sumary, setSumary] = useState(false);
+  const [swapPage, setSwapPage] = useState(false);
   const [score, setScore] = useState(0);
   const [times, setTimes] = useState(1);
   const [currentImg, setCurrentImg] = useState(0);
@@ -53,6 +54,7 @@ const Game = ({ auth, reportResult }) => {
       const number = randomNumber();
       setImg(mapImages[number]);
       const result = compare(currentImg, tmp);
+      runEffect();
       if (
         (e.key === 'ArrowRight' || e.key === 'ArrowLeft') &&
         currentImg === 0
@@ -62,12 +64,13 @@ const Game = ({ auth, reportResult }) => {
         setCurrentImg(number);
         setTmp(currentImg);
       } else if (e.key === result) {
-        setScore(score + 10 * times);
+        setScore(score + 10);
         setTimes(times + 1 > 10 ? times : times + 1);
         setCurrentImg(number);
         setTmp(currentImg);
       } else {
         setTimes(1);
+        setScore(score > 10 ? score - 20 : score === 0 ? score : score - 10);
         setCurrentImg(number);
         setTmp(currentImg);
       }
@@ -82,10 +85,27 @@ const Game = ({ auth, reportResult }) => {
     const payload = {
       username: auth.user.name,
       unit: auth.user.unit,
-      score: score,
+      score: score * times,
     };
 
     reportResult(payload);
+  };
+
+  const closeResult = () => {
+    setPause(false);
+    setSwapPage(true);
+  };
+
+  if (swapPage) {
+    return <Redirect to='/ranking' />;
+  }
+
+  const runEffect = () => {
+    $('#effect').fadeIn('fast', () => {
+      setTimeout(() => {
+        $('#effect').removeAttr('style').hide().fadeIn();
+      }, 10);
+    });
   };
 
   return (
@@ -108,21 +128,13 @@ const Game = ({ auth, reportResult }) => {
           {' | '} {`x ${times}`}
         </div>
         <div className='guide'>
-          <div>Does the CURRENT card match the card that</div>
-          <div>came IMMEDIATELY BEFORE it?</div>
+          <div>Bức hình HIỆN TẠI có trùng khớp với bức hình </div>
+          <div>đã hiển thị ra TRƯỚC ĐÓ không?</div>
         </div>
         <Row>
+          <Col xs={3}></Col>
           <Col xs={6}>
-            <div className='part1'>
-              <Card style={{ width: '100%', height: '20rem' }} className='mb-2'>
-                <Card.Body>
-                  <Card.Img src={bg} />
-                </Card.Body>
-              </Card>
-            </div>
-          </Col>
-          <Col xs={6}>
-            <div className='part2'>
+            <div className='part2' id='effect'>
               <Card style={{ width: '100%', height: '20rem' }} className='mb-2'>
                 <Card.Body>
                   <Card.Img src={img} />
@@ -130,6 +142,7 @@ const Game = ({ auth, reportResult }) => {
               </Card>
             </div>
           </Col>
+          <Col xs={3}></Col>
         </Row>
         <div className='footer'>
           {!play && (
@@ -151,15 +164,20 @@ const Game = ({ auth, reportResult }) => {
           <ArrowRightSquare />
           <span style={{ marginLeft: '10px' }}>Yes</span>
         </div>
+        <div className='note'>
+          Sử dụng các nút qua trái, qua phải của bàn phím không sử dụng chuột
+        </div>
       </Container>
-      <Modal show={pause} size='sm' aria-labelledby='result modal' centered>
+      <Modal show={pause} size='sm' centered>
         <Modal.Body>
           <Image src={congrats} fluid />
           <div className='congrat'>
             <h4>{`Your Score: ${score}`}</h4>
           </div>
           <div className='footer' style={{ textAlign: 'center' }}>
-            <Button variant='danger'>OK</Button>
+            <Button variant='danger' onClick={() => closeResult()}>
+              OK
+            </Button>
           </div>
         </Modal.Body>
       </Modal>

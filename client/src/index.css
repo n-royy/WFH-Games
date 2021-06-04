@@ -17,7 +17,7 @@
   position: relative;
   text-align: center;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.33);
-  margin-top: 150px;
+  margin-top: 90px;
   z-index: 3;
 }
 .main .logo.cursive {
@@ -29,7 +29,7 @@
   z-index: 4;
 }
 .main .motto {
-  min-height: 140px;
+  min-height: 100px;
 }
 .main .motto,
 .main .subscribe .info-text {
@@ -63,29 +63,33 @@
 .card-img {
   height: 100%;
 }
-.bg-main-game .part1 {
-  padding: 30px;
-}
 .bg-main-game .part2 {
-  padding: 30px;
+  padding: 10px;
 }
 .bg-main-game .guide {
   color: #ffffff;
   text-align: center;
   font-size: xx-large;
-  font-family: 'Grand Hotel', cursive;
+  font-family: 'Candara', cursive;
 }
 .bg-main-game .footer {
   color: #ffffff;
   text-align: center;
   font-size: xx-large;
-  font-family: 'Grand Hotel', cursive;
+  font-family: 'Candara', cursive;
 }
+.bg-main-game .note {
+  color: #ffffff;
+  text-align: center;
+  font-size: small;
+  font-family: 'Candara', cursive;
+}
+
 .bg-main-game .header {
   color: red;
   text-align: right;
   font-size: x-large;
-  font-family: 'Grand Hotel', cursive;
+  font-family: 'Candara', cursive;
 }
 .congrat {
   text-align: center;
