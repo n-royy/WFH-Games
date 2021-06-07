@@ -70,7 +70,7 @@ const Game = ({ auth, reportResult }) => {
         setTmp(currentImg);
       } else {
         setTimes(1);
-        setScore(score > 10 ? score - 20 : score === 0 ? score : score - 10);
+        setScore(0);
         setCurrentImg(number);
         setTmp(currentImg);
       }
