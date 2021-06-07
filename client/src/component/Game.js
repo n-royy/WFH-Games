@@ -52,7 +52,7 @@ const Game = ({ auth, reportResult }) => {
     if (!play && sumary) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       const number = randomNumber();
-      await setImg(mapImages[number]);
+      setImg(mapImages[number]);
       await runEffect();
       const result = compare(currentImg, tmp);
       if (
@@ -135,7 +135,7 @@ const Game = ({ auth, reportResult }) => {
           <Col xs={3}></Col>
           <Col xs={6}>
             <div className='part2' id='effect'>
-              <Card style={{ width: '100%', height: '20rem' }} className='mb-2'>
+              <Card style={{ width: '100%', height: '21rem' }} className='mb-2'>
                 <Card.Body>
                   <Card.Img src={img} />
                 </Card.Body>
