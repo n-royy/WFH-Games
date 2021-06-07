@@ -47,14 +47,14 @@ const Game = ({ auth, reportResult }) => {
     }
   };
 
-  const onKeyPress = (e) => {
+  const onKeyPress = async (e) => {
     e.preventDefault();
     if (!play && sumary) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       const number = randomNumber();
-      setImg(mapImages[number]);
+      await setImg(mapImages[number]);
+      await runEffect();
       const result = compare(currentImg, tmp);
-      runEffect();
       if (
         (e.key === 'ArrowRight' || e.key === 'ArrowLeft') &&
         currentImg === 0
@@ -64,7 +64,7 @@ const Game = ({ auth, reportResult }) => {
         setCurrentImg(number);
         setTmp(currentImg);
       } else if (e.key === result) {
-        setScore(score + 10);
+        setScore(score + 10 * times);
         setTimes(times + 1 > 10 ? times : times + 1);
         setCurrentImg(number);
         setTmp(currentImg);
@@ -85,7 +85,7 @@ const Game = ({ auth, reportResult }) => {
     const payload = {
       username: auth.user.name,
       unit: auth.user.unit,
-      score: score * times,
+      score: score,
     };
 
     reportResult(payload);
